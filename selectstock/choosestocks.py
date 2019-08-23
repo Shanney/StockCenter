@@ -33,5 +33,7 @@ if judge_cow(report_cash_flow.loc[0]):
 consecutive_five_year_roe(indicators)
 
 query_balance = query(balance).filter(balance.code == drink_list[0])
-balance_six = [get_fundamentals(query_balance, statDate=str(year)) for year in range(2013, 2019)]
-report_balance = finance.run_query(query_balance)
+report_balance_two = [get_fundamentals(query_balance, statDate=str(year)) for year in range(2017, 2019)]
+
+# 企业三个指标，查看企业模式，茅台模式，沃尔玛模式，银行模式
+ent_mode(report_income.loc[0], report_cash_flow.loc[0], report_balance_two, indicators[4].loc[0])
