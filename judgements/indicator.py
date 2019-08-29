@@ -5,7 +5,7 @@ def consecutive_five_year_roe(indicators):
     for indicator in indicators:
         print(indicator.loc[0].statDate + '    ' + str(indicator.loc[0].roe))
         roe.append(indicator.loc[0].roe)
-        if indicator.loc[0].roe <= 0:
+        if indicator.loc[0].roe < 15:
             roe_positive_flag = False
             break
     return roe_positive_flag
@@ -35,7 +35,7 @@ def ent_mode(income, cash_flow, balance_two, indicator):
     ave_net_asset = income.net_profit / indicator.roe
     ind_three = ave_asset / ave_net_asset
 
-    print('产品利润率：' + str(ind_one))
-    print('总资产周转率' + str(ind_two))
-    print('杠杆系数' + str(ind_three))
-
+    return {'ind_one': str(ind_one), 'ind_two': str(ind_two), 'ind_three': str(ind_three)}
+    # print('产品利润率：' + str(ind_one))
+    # print('总资产周转率' + str(ind_two))
+    # print('杠杆系数' + str(ind_three))
