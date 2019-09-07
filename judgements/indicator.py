@@ -3,7 +3,7 @@ def consecutive_five_year_roe(indicators):
     roe_positive_flag = True
     roe = []
     for indicator in indicators:
-        print(indicator.loc[0].statDate + '    ' + str(indicator.loc[0].roe))
+        # print(indicator.loc[0].statDate + '    ' + str(indicator.loc[0].roe))
         roe.append(indicator.loc[0].roe)
         if indicator.loc[0].roe < 15:
             roe_positive_flag = False
