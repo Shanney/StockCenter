@@ -3,6 +3,7 @@ import datetime
 import xlwt
 from excelutils import header
 from selectstock.selections import analyze_enterprise
+import os
 
 
 def generate_stock_info(industry_code):
@@ -25,4 +26,9 @@ def generate_stock_info(industry_code):
             print(security_info.display_name + '   ' + security_info.code)
             analyze_enterprise(security_info, sheet, i)
             i += 1
-    book.save(r"D:\stock_" + industry_code + ".xls")
+    # book.save(r"D:\stock_" + industry_code + ".xls")
+    directory = r'/Users/xiangnan/stock_brief'
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
+    book.save(r"/Users/xiangnan/stock_brief/stock_" + industry_code + ".xls")

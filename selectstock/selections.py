@@ -35,8 +35,12 @@ def analyze_enterprise(security_info, sheet, rowIndex):
         # cash_flow.net_operate_cash_flow,
         #          cash_flow.net_invest_cash_flow,
         #          cash_flow.net_finance_cash_flow
-        if judge_cow(report_cash_flow.loc[0]):
+        result = judge_cow(report_cash_flow.loc[0])
+        if result['cow_flag']:
             sheet.write(rowIndex, 4, '奶牛型企业')
+        elif result['health_flag']:
+            sheet.write(rowIndex, 4, '老母鸡型企业')
+        sheet.write(rowIndex, 5, result['ent_type'])
 
     indicator_flag = True
     if len(indicators) > 0:
@@ -46,9 +50,11 @@ def analyze_enterprise(security_info, sheet, rowIndex):
     else:
         indicator_flag = False
     if indicator_flag:
+        result = consecutive_five_year_roe(indicators)
         # 查询连续五年roe情况
-        if consecutive_five_year_roe(indicators):
-            sheet.write(rowIndex, 5, '连续五年ROE大于15%')
+        if result['roe_positive_flag']:
+            sheet.write(rowIndex, 6, '连续五年ROE大于15%')
+        sheet.write(rowIndex, 7, result['consecutive_detail'])
 
     query_balance = query(balance).filter(balance.code == security_info.code)
     report_balance_two = [get_fundamentals(query_balance, statDate=str(year)) for year in range(2017, 2019)]
@@ -64,6 +70,6 @@ def analyze_enterprise(security_info, sheet, rowIndex):
         # 企业三个指标，查看企业模式，茅台模式，沃尔玛模式，银行模式
         enterprise_mode = ent_mode(report_income.loc[0], report_cash_flow.loc[0], report_balance_two,
                                    indicators[4].loc[0])
-        sheet.write(rowIndex, 6, enterprise_mode['ind_one'])
-        sheet.write(rowIndex, 7, enterprise_mode['ind_two'])
-        sheet.write(rowIndex, 8, enterprise_mode['ind_three'])
+        sheet.write(rowIndex, 8, enterprise_mode['ind_one'])
+        sheet.write(rowIndex, 9, enterprise_mode['ind_two'])
+        sheet.write(rowIndex, 10, enterprise_mode['ind_three'])
