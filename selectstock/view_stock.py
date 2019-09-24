@@ -8,5 +8,6 @@ auth('13578992860', '1qaz2wsx')
 # C36 汽车制造业
 # c14
 # generate_stock_info('C15')
-generate_stock_info('C14')
+# generate_stock_info('C14')
 # generate_stock_info('C36')
+generate_stock_info('HY449', False)
