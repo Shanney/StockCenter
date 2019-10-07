@@ -3,6 +3,27 @@ from judgements.judgecow import *
 from judgements.cashflow import *
 from judgements.indicator import *
 
+def cash_analyze(report_cash_flow, report_income, sheet, row_index, start_column):
+    if len(report_cash_flow) > 0 and len(report_income) > 0:
+        # 计算了上面行业里的第一支股票，经营活动现金流净额/净利润的值
+        sheet.write(row_index, start_column, net_profit_into_account(report_cash_flow.loc[0], report_income.loc[0]))
+        start_column += 1
+        # 销售商品、提供劳务收到的现金与营业收入对比
+        # 理想的数字是1.17，通常，只要比值大于1就问题不大
+        sheet.write(row_index, start_column, sale_income_situation(report_cash_flow.loc[0], report_income.loc[0]))
+        start_column += 1
+        # 企业现金流肖像
+        # 经营活动现金流净额，投资活动现金流净额，筹资活动现金流净额
+        # cash_flow.net_operate_cash_flow,
+        #          cash_flow.net_invest_cash_flow,
+        #          cash_flow.net_finance_cash_flow
+        result = judge_cow(report_cash_flow.loc[0])
+        if result['cow_flag']:
+            sheet.write(row_index, start_column, '奶牛型企业')
+        elif result['health_flag']:
+            sheet.write(row_index, start_column, '老母鸡型企业')
+        start_column += 1
+        sheet.write(row_index, start_column, result['ent_type'])
 
 def analyze_enterprise(security_info, sheet, rowIndex):
     '''
@@ -73,3 +94,10 @@ def analyze_enterprise(security_info, sheet, rowIndex):
         sheet.write(rowIndex, 8, enterprise_mode['ind_one'])
         sheet.write(rowIndex, 9, enterprise_mode['ind_two'])
         sheet.write(rowIndex, 10, enterprise_mode['ind_three'])
+
+    report_cash_flow = get_fundamentals(query_cash, statDate='2019q1')
+    report_income = get_fundamentals(query_income, statDate='2019q1')
+    cash_analyze(report_cash_flow, report_income, sheet, rowIndex, 11)
+    report_cash_flow = get_fundamentals(query_cash, statDate='2019q2')
+    report_income = get_fundamentals(query_income, statDate='2019q2')
+    cash_analyze(report_cash_flow, report_income, sheet, rowIndex, 15)
