@@ -30,8 +30,8 @@ def generate_stock_info(industry_code, concept_flag):
             analyze_enterprise(security_info, sheet, i)
             i += 1
     # book.save(r"D:\stock_" + industry_code + ".xls")
-    directory = r'/Users/xiangnan/stock_brief'
+    directory = r'C:\workingFolder\stocks'
     if not os.path.exists(directory):
         os.makedirs(directory)
 
-    book.save(r"/Users/xiangnan/stock_brief/stock_" + industry_code + ".xls")
+    book.save(r"C:\workingFolder\stocks\stock_" + industry_code + ".xls")

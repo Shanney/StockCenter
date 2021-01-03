@@ -78,7 +78,7 @@ def analyze_enterprise(security_info, sheet, rowIndex):
         sheet.write(rowIndex, 7, result['consecutive_detail'])
 
     query_balance = query(balance).filter(balance.code == security_info.code)
-    report_balance_two = [get_fundamentals(query_balance, statDate=str(year)) for year in range(2017, 2019)]
+    report_balance_two = [get_fundamentals(query_balance, statDate=str(year)) for year in range(2018, 2020)]
     balance_flag = True
     if len(report_balance_two) > 0:
         for indi in indicators:
@@ -95,9 +95,12 @@ def analyze_enterprise(security_info, sheet, rowIndex):
         sheet.write(rowIndex, 9, enterprise_mode['ind_two'])
         sheet.write(rowIndex, 10, enterprise_mode['ind_three'])
 
-    report_cash_flow = get_fundamentals(query_cash, statDate='2019q1')
-    report_income = get_fundamentals(query_income, statDate='2019q1')
+    report_cash_flow = get_fundamentals(query_cash, statDate='2020q1')
+    report_income = get_fundamentals(query_income, statDate='2020q1')
     cash_analyze(report_cash_flow, report_income, sheet, rowIndex, 11)
-    report_cash_flow = get_fundamentals(query_cash, statDate='2019q2')
-    report_income = get_fundamentals(query_income, statDate='2019q2')
+    report_cash_flow = get_fundamentals(query_cash, statDate='2020q2')
+    report_income = get_fundamentals(query_income, statDate='2020q2')
     cash_analyze(report_cash_flow, report_income, sheet, rowIndex, 15)
+    report_cash_flow = get_fundamentals(query_cash, statDate='2020q3')
+    report_income = get_fundamentals(query_income, statDate='2020q3')
+    cash_analyze(report_cash_flow, report_income, sheet, rowIndex, 19)
